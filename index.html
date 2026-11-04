@@ -34,12 +34,7 @@
 @media(max-height:590px){.button-stage{top:57%}.red-button{width:180px;height:180px}.button-message{margin-top:8px}.action-btn{min-height:53px;font-size:12px}.action-detail{font-size:9px}.action-dock{bottom:calc(var(--safe-bottom) + 7px)}.chat-area{top:68px;height:135px}.chat-bubble{font-size:11px;padding:7px 10px}.game-title{font-size:39px;margin-top:50px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-/* ASOBEAT game portal and persistent ad-space shell.
-   This is a visual reservation ONLY. Do not insert a manually sticky AdSense
-   display ad here on mobile. For real sticky mobile ads, use Google's managed
-   Auto Ads anchor format after approval (and remove the mock placeholder). */
-:root{--asobeat-ad-space:calc(72px + env(safe-area-inset-bottom,0px))}
-.viewport>.screen{bottom:var(--asobeat-ad-space);--safe-bottom:0px}
+/* ASOBEAT portal link and ending-only ad space. */
 .asobeat-home-icon{position:absolute;z-index:25;top:calc(env(safe-area-inset-top,0px) + 11px);left:14px;display:inline-flex;align-items:center;gap:7px;min-height:40px;max-width:calc(100% - 28px);padding:8px 12px;color:#fff3d7;text-decoration:none;border:1px solid #ffe8ae6b;border-radius:13px;background:#0d2034eb;box-shadow:0 5px 17px #0007;font-size:12px;font-weight:950;letter-spacing:.05em;touch-action:manipulation}
 .asobeat-home-icon:active{transform:scale(.97)}
 .asobeat-home-icon:focus-visible,.other-game-link:focus-visible{outline:3px solid #ffe0a2;outline-offset:3px}
@@ -49,9 +44,11 @@
 .other-game-link{display:flex;align-items:center;justify-content:center;min-height:53px;margin-top:17px;padding:12px 16px;border-radius:14px;border:1px solid #a8e7ffb8;background:linear-gradient(180deg,#3178a2,#194f74);box-shadow:0 4px 0 #0d3457,0 9px 24px #0005;color:#fffefa;text-decoration:none;text-align:center;font-weight:1000;font-size:14px;touch-action:manipulation}
 .other-game-link:active{transform:translateY(3px);box-shadow:0 1px 0 #0d3457}
 #endHome{margin-top:9px}
-.persistent-ad-slot{position:absolute;z-index:22;left:0;right:0;bottom:0;height:var(--asobeat-ad-space);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:5px 10px calc(5px + env(safe-area-inset-bottom,0px));border-top:1px solid #83a3bd60;background:linear-gradient(180deg,#0e1b2a,#080f19);box-shadow:0 -5px 20px #0408127a}
-.persistent-ad-label{line-height:1.2;color:#a9bcc9;font-size:9px;letter-spacing:.14em}
-.persistent-ad-placeholder{display:flex;align-items:center;justify-content:center;width:min(300px,calc(100% - 12px));height:48px;flex:0 0 48px;border:1px dashed #5b7786a8;border-radius:8px;color:#aabfca;font-size:11px;font-weight:750;letter-spacing:.05em;background:#1a2b3b70}
+/* Ad is confined to the result screen, in normal scroll flow; never fixed. */
+.ending-ad-slot{margin:150px auto 0;max-width:360px;padding:15px 12px 20px;border-top:1px solid #64798b66;text-align:center;contain:layout style}
+.ending-ad-slot[hidden]{display:none!important}
+.ending-ad-label{font-size:11px;letter-spacing:.1em;color:#b9c7d0;margin-bottom:10px}
+.ending-ad-content{margin:auto;min-height:100px;max-width:336px;display:grid;place-items:center;border:1px dashed #657e91a8;border-radius:10px;background:#1a2b3b70;color:#bacbd7;font-size:12px}
 @media(max-height:690px){.viewport>.screen .button-stage{top:55%}.viewport>.screen .chat-area{height:118px}.viewport>.screen .red-button{width:clamp(154px,46vw,193px);height:clamp(154px,46vw,193px)}}
 @media(max-height:580px){.viewport>.screen .button-stage{top:52%}.viewport>.screen .chat-area{top:63px;height:102px}.viewport>.screen .red-button{width:152px;height:152px}.viewport>.screen .action-btn{min-height:48px}}
 </style>
@@ -102,6 +99,11 @@
       <div class="end-controls"><button id="replayBtn" class="solid-btn red wide" type="button">↻ もう一度遊ぶ</button><button id="resultGallery" class="line-btn" type="button">▦ エンディング図鑑</button><button id="shareBtn" class="line-btn" type="button">𝕏 結果をシェア</button></div>
       <a id="moreGamesBtn" class="other-game-link" href="https://asobeatapps-ops.github.io/gamehome/">🎮 他のゲームも遊んでみる →</a>
       <button id="endHome" type="button" class="mini-link">タイトルに戻る</button>
+      <!-- A: Result-only ad. Hidden until AdSense approval and insertion of the official ad unit. -->
+      <aside id="endingAdSlot" class="ending-ad-slot" aria-label="広告掲載エリア" hidden>
+        <div class="ending-ad-label">広告</div>
+        <div id="endingAdContent" class="ending-ad-content">広告掲載予定スペース</div>
+      </aside>
     </div>
   </section>
   <section id="screenGallery" class="screen" aria-label="エンディング図鑑" hidden>
@@ -113,10 +115,6 @@
     </div>
   </section>
   <div id="particles" class="particles" aria-hidden="true"></div>
-  <aside id="persistentAdSlot" class="persistent-ad-slot" aria-label="広告掲載予定エリア">
-    <div class="persistent-ad-label">広告</div>
-    <div class="persistent-ad-placeholder">広告掲載予定スペース</div>
-  </aside>
 </div></div>
 <script>
 (() => {
