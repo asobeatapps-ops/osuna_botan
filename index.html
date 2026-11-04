@@ -33,10 +33,33 @@
 @media(max-height:700px){.game-title{margin-top:clamp(65px,15dvh,106px)}.start-btn{margin-bottom:22px;min-height:61px}.button-stage{top:58%}.button-message{margin-top:14px;font-size:11px}.action-dock{bottom:calc(var(--safe-bottom) + 11px)}.action-btn{min-height:63px}.chat-area{gap:6px}.chat-bubble{padding:9px 12px}.timer-card{padding:7px 11px}.time-digits{font-size:26px}.red-button{width:clamp(172px,49vw,205px);height:clamp(172px,49vw,205px)}}
 @media(max-height:590px){.button-stage{top:57%}.red-button{width:180px;height:180px}.button-message{margin-top:8px}.action-btn{min-height:53px;font-size:12px}.action-detail{font-size:9px}.action-dock{bottom:calc(var(--safe-bottom) + 7px)}.chat-area{top:68px;height:135px}.chat-bubble{font-size:11px;padding:7px 10px}.game-title{font-size:39px;margin-top:50px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* ASOBEAT game portal and persistent ad-space shell.
+   This is a visual reservation ONLY. Do not insert a manually sticky AdSense
+   display ad here on mobile. For real sticky mobile ads, use Google's managed
+   Auto Ads anchor format after approval (and remove the mock placeholder). */
+:root{--asobeat-ad-space:calc(72px + env(safe-area-inset-bottom,0px))}
+.viewport>.screen{bottom:var(--asobeat-ad-space);--safe-bottom:0px}
+.asobeat-home-icon{position:absolute;z-index:25;top:calc(env(safe-area-inset-top,0px) + 11px);left:14px;display:inline-flex;align-items:center;gap:7px;min-height:40px;max-width:calc(100% - 28px);padding:8px 12px;color:#fff3d7;text-decoration:none;border:1px solid #ffe8ae6b;border-radius:13px;background:#0d2034eb;box-shadow:0 5px 17px #0007;font-size:12px;font-weight:950;letter-spacing:.05em;touch-action:manipulation}
+.asobeat-home-icon:active{transform:scale(.97)}
+.asobeat-home-icon:focus-visible,.other-game-link:focus-visible{outline:3px solid #ffe0a2;outline-offset:3px}
+.asobeat-home-icon[hidden]{display:none!important}
+.asobeat-home-mark{display:grid;place-items:center;font-size:17px;width:19px;height:19px;line-height:1}
+#screenEnd .end-wrap,#screenGallery .end-wrap{padding-top:calc(var(--safe-top) + 67px)}
+.other-game-link{display:flex;align-items:center;justify-content:center;min-height:53px;margin-top:17px;padding:12px 16px;border-radius:14px;border:1px solid #a8e7ffb8;background:linear-gradient(180deg,#3178a2,#194f74);box-shadow:0 4px 0 #0d3457,0 9px 24px #0005;color:#fffefa;text-decoration:none;text-align:center;font-weight:1000;font-size:14px;touch-action:manipulation}
+.other-game-link:active{transform:translateY(3px);box-shadow:0 1px 0 #0d3457}
+#endHome{margin-top:9px}
+.persistent-ad-slot{position:absolute;z-index:22;left:0;right:0;bottom:0;height:var(--asobeat-ad-space);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:5px 10px calc(5px + env(safe-area-inset-bottom,0px));border-top:1px solid #83a3bd60;background:linear-gradient(180deg,#0e1b2a,#080f19);box-shadow:0 -5px 20px #0408127a}
+.persistent-ad-label{line-height:1.2;color:#a9bcc9;font-size:9px;letter-spacing:.14em}
+.persistent-ad-placeholder{display:flex;align-items:center;justify-content:center;width:min(300px,calc(100% - 12px));height:48px;flex:0 0 48px;border:1px dashed #5b7786a8;border-radius:8px;color:#aabfca;font-size:11px;font-weight:750;letter-spacing:.05em;background:#1a2b3b70}
+@media(max-height:690px){.viewport>.screen .button-stage{top:55%}.viewport>.screen .chat-area{height:118px}.viewport>.screen .red-button{width:clamp(154px,46vw,193px);height:clamp(154px,46vw,193px)}}
+@media(max-height:580px){.viewport>.screen .button-stage{top:52%}.viewport>.screen .chat-area{top:63px;height:102px}.viewport>.screen .red-button{width:152px;height:152px}.viewport>.screen .action-btn{min-height:48px}}
 </style>
 </head>
 <body>
 <div id="app"><div class="viewport" id="viewport">
+  <!-- Home icon stays visible on the title, ending, and gallery screens. -->
+  <a id="asobeatHomeIcon" class="asobeat-home-icon" href="https://asobeatapps-ops.github.io/gamehome/" aria-label="ASOBEATのゲーム一覧へ戻る" title="ASOBEATゲーム一覧へ"><span class="asobeat-home-mark" aria-hidden="true">⌂</span><span>ASOBEAT</span></a>
   <section id="screenTitle" class="screen" aria-label="タイトル画面">
     <div class="office-art" id="titleOfficeArt" aria-hidden="true"></div><div class="title-shade"></div>
     <div class="title-content">
@@ -77,6 +100,7 @@
       <div id="endStory" class="ending-story"></div><div id="newEnd" class="new-end" hidden>✦ NEW ENDING 発見！</div>
       <div class="end-stats"><div class="end-stat"><small>ボタン</small><strong id="endPresses">0回</strong></div><div class="end-stat"><small>処理した書類</small><strong id="endPapers">0枚</strong></div><div class="end-stat"><small>図鑑</small><strong id="endCollection">0/13</strong></div></div>
       <div class="end-controls"><button id="replayBtn" class="solid-btn red wide" type="button">↻ もう一度遊ぶ</button><button id="resultGallery" class="line-btn" type="button">▦ エンディング図鑑</button><button id="shareBtn" class="line-btn" type="button">𝕏 結果をシェア</button></div>
+      <a id="moreGamesBtn" class="other-game-link" href="https://asobeatapps-ops.github.io/gamehome/">🎮 他のゲームも遊んでみる →</a>
       <button id="endHome" type="button" class="mini-link">タイトルに戻る</button>
     </div>
   </section>
@@ -85,10 +109,14 @@
       <button id="galleryBack" class="gallery-back" type="button">← 結果に戻る</button>
       <div class="gallery-header"><div><div class="gallery-eyebrow">13 DIFFERENT ENDINGS</div><h2 class="gallery-title">エンディング図鑑</h2></div><div id="galleryCount" class="gallery-count">0 / 13</div></div>
       <div class="gallery-track"><div id="galleryFill"></div></div><div id="galleryGrid" class="gallery-grid"></div>
-      <div class="gallery-footer"><button id="galleryReplay" class="solid-btn red" type="button">↻ もう一度遊ぶ</button><button id="galleryShare" class="line-btn" type="button">🖼 図鑑を共有</button><button id="galleryReset" class="line-btn" type="button">図鑑を初期化</button><div class="gallery-info">発見したエンディングは、このブラウザに保存されます。</div></div>
+      <div class="gallery-footer"><button id="galleryReplay" class="solid-btn red" type="button">↻ もう一度遊ぶ</button><button id="galleryReset" class="line-btn" type="button">図鑑を初期化</button><div class="gallery-info">発見したエンディングは、このブラウザに保存されます。</div></div>
     </div>
   </section>
   <div id="particles" class="particles" aria-hidden="true"></div>
+  <aside id="persistentAdSlot" class="persistent-ad-slot" aria-label="広告掲載予定エリア">
+    <div class="persistent-ad-label">広告</div>
+    <div class="persistent-ad-placeholder">広告掲載予定スペース</div>
+  </aside>
 </div></div>
 <script>
 (() => {
@@ -132,7 +160,7 @@ let keyboardHold=false,screenBeforeGallery='screenEnd';
 
 function loadSave(){try{const data=JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');return{found:[...new Set((Array.isArray(data.found)?data.found:[]).filter(id=>ENDINGS.some(e=>e.id===id)))],plays:Math.max(0,Number(data.plays)||0)}}catch{return{found:[],plays:0}}}
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(store))}catch(e){console.info('保存できませんでした',e)}}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.hidden=(s.id!==id));const screen=$(id);if(screen)screen.scrollTop=0}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.hidden=(s.id!==id));$('asobeatHomeIcon').hidden=(id==='screenGame');const screen=$(id);if(screen)screen.scrollTop=0}
 function clearDialogue(){clearTimeout(dialogueTimeout);clearTimeout(introFinishTimeout);dialogueTimeout=0;introFinishTimeout=0;$('chatArea').replaceChildren();$('chatArea').classList.remove('farewell');$('introTap').hidden=true}
 function stopLoop(){if(loopId)cancelAnimationFrame(loopId);loopId=0;if(run){run.active=false;run.held=false;run.holdPointer=null}keyboardHold=false;$('redButton').classList.remove('is-held','is-charged','bump')}
 function beep(type='tap'){
@@ -492,153 +520,11 @@ function returnTitle(){stopLoop();clearDialogue();clearToast();phase='title';sho
 function shareResult(){
   if(!run?.finalEndingId)return;
   const e=ENDINGS.find(x=>x.id===run.finalEndingId);
-  const message=`『押すなって言っただろ！』
-私の残業の末路は「${e.name}」でした！${e.emoji}
-赤いボタンを${run.resultPresses??run.presses}回押してこうなった。
-#ASOBEAT #押すなって言っただろ`;
+  const message=`『押すなって言っただろ！』\n私の残業の末路は「${e.name}」でした！${e.emoji}\n赤いボタンを${run.resultPresses??run.presses}回押してこうなった。\n#ASOBEAT #押すなって言っただろ`;
   const url=location.protocol==='https:'||location.protocol==='http:'?`${location.origin}${location.pathname}`:'';
   const target=`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}${url?'&url='+encodeURIComponent(url):''}`;
   const opened=window.open(target,'_blank','noopener,noreferrer');
   if(!opened&&navigator.clipboard)navigator.clipboard.writeText(message+(url?'\n'+url:'')).catch(()=>{});
-}
-async function canvasToBlob(canvas){
-  return await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
-}
-function roundedRect(ctx,x,y,w,h,r,fill,stroke){
-  const rr=Math.min(r,w/2,h/2);
-  ctx.beginPath();
-  ctx.moveTo(x+rr,y);
-  ctx.arcTo(x+w,y,x+w,y+h,rr);
-  ctx.arcTo(x+w,y+h,x,y+h,rr);
-  ctx.arcTo(x,y+h,x,y,rr);
-  ctx.arcTo(x,y,x+w,y,rr);
-  if(fill){ctx.fillStyle=fill;ctx.fill();}
-  if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}
-}
-function wrapLines(ctx,text,maxWidth){
-  const chars=[...text];
-  const lines=[];let line='';
-  for(const ch of chars){
-    const test=line+ch;
-    if(line&&ctx.measureText(test).width>maxWidth){lines.push(line);line=ch;}else{line=test;}
-  }
-  if(line)lines.push(line);
-  return lines;
-}
-function drawMultiline(ctx,text,x,y,maxWidth,lineHeight,maxLines=2){
-  const lines=wrapLines(ctx,text,maxWidth).slice(0,maxLines);
-  lines.forEach((line,i)=>ctx.fillText(line,x,y+i*lineHeight));
-}
-function buildGalleryShareCanvas(){
-  const unlockedIds=new Set(store.found);
-  const total=ENDINGS.length;
-  const found=store.found.length;
-  const canvas=document.createElement('canvas');
-  canvas.width=1080;
-  canvas.height=1600;
-  const ctx=canvas.getContext('2d');
-  const bg=ctx.createLinearGradient(0,0,0,1600);
-  bg.addColorStop(0,'#0d1522');
-  bg.addColorStop(.56,'#16273a');
-  bg.addColorStop(1,'#22394b');
-  ctx.fillStyle=bg;
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  const glow1=ctx.createRadialGradient(220,180,30,220,180,250);
-  glow1.addColorStop(0,'rgba(255,79,109,.26)');
-  glow1.addColorStop(1,'rgba(255,79,109,0)');
-  ctx.fillStyle=glow1;ctx.fillRect(0,0,1080,1600);
-  const glow2=ctx.createRadialGradient(860,1270,20,860,1270,250);
-  glow2.addColorStop(0,'rgba(255,213,134,.2)');
-  glow2.addColorStop(1,'rgba(255,213,134,0)');
-  ctx.fillStyle=glow2;ctx.fillRect(0,0,1080,1600);
-
-  ctx.fillStyle='#ffcf84';
-  ctx.font='900 24px system-ui, sans-serif';
-  ctx.fillText('13 DIFFERENT ENDINGS',72,92);
-  ctx.fillStyle='#fff1d5';
-  ctx.font='900 62px system-ui, sans-serif';
-  ctx.fillText('エンディング図鑑',72,164);
-  ctx.fillStyle='#bfd0db';
-  ctx.font='700 26px system-ui, sans-serif';
-  ctx.fillText('みんなは何種類見つけた？ 未発見はネタバレなしで共有！',72,210);
-
-  roundedRect(ctx,790,62,218,110,26,'rgba(10,18,31,.72)','rgba(255,229,183,.38)');
-  ctx.fillStyle='#ffecc8';
-  ctx.font='900 22px system-ui, sans-serif';
-  ctx.textAlign='center';
-  ctx.fillText('発見数',899,100);
-  ctx.font='1000 46px system-ui, sans-serif';
-  ctx.fillText(`${found} / ${total}`,899,150);
-  ctx.textAlign='left';
-
-  roundedRect(ctx,72,248,936,26,13,'rgba(255,255,255,.12)',null);
-  const fillW=936*(found/total);
-  if(fillW>0){
-    roundedRect(ctx,72,248,fillW,26,13,'#ff6f7b',null);
-    roundedRect(ctx,72,248,Math.max(0,fillW-160),26,13,'#ffcf77',null);
-  }
-
-  const startY=322, cardW=452, cardH=136, gapX=32, gapY=24, startX=72;
-  ENDINGS.forEach((ending,idx)=>{
-    const col=idx%2,row=Math.floor(idx/2);
-    const x=startX+col*(cardW+gapX), y=startY+row*(cardH+gapY);
-    const unlocked=unlockedIds.has(ending.id);
-    roundedRect(ctx,x,y,cardW,cardH,24,unlocked?'rgba(29,48,68,.92)':'rgba(22,34,48,.88)',unlocked?'rgba(255,230,187,.34)':'rgba(121,140,157,.24)');
-    ctx.fillStyle=unlocked?'#ffffff':'#c4ced7';
-    ctx.font='900 38px system-ui, sans-serif';
-    ctx.fillText(unlocked?ending.emoji:'🔒',x+24,y+52);
-    ctx.fillStyle='#ffd896';
-    ctx.font='900 18px system-ui, sans-serif';
-    const label=(unlocked&&(ending.id==='true'||ending.id==='rocket')) ? (ending.id==='true'?'TRUE END 12':'SECRET END 13') : `ENDING ${ending.no}`;
-    ctx.fillText(label,x+82,y+34);
-    ctx.fillStyle=unlocked?'#fff5e7':'#d7e1e9';
-    ctx.font='900 28px system-ui, sans-serif';
-    drawMultiline(ctx,unlocked?ending.name:'？？？？？？',x+82,y+76,cardW-104,32,2);
-  });
-
-  roundedRect(ctx,72,1470,936,78,24,'rgba(12,21,33,.72)','rgba(255,229,183,.2)');
-  ctx.fillStyle='#d6e3ec';
-  ctx.font='800 24px system-ui, sans-serif';
-  ctx.fillText('『押すなって言っただろ！』  #ASOBEAT  #押すなって言っただろ',96,1514);
-  const url=(location.protocol==='https:'||location.protocol==='http:')?`${location.origin}${location.pathname}`:'';
-  if(url){
-    ctx.fillStyle='#fff0cf';
-    ctx.font='700 22px system-ui, sans-serif';
-    ctx.fillText(url,96,1541);
-  }
-  return canvas;
-}
-function triggerBlobDownload(blob,filename){
-  const a=document.createElement('a');
-  const obj=URL.createObjectURL(blob);
-  a.href=obj;
-  a.download=filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(()=>URL.revokeObjectURL(obj),2000);
-}
-async function shareGalleryProgress(){
-  const canvas=buildGalleryShareCanvas();
-  const blob=await canvasToBlob(canvas);
-  if(!blob){alert('画像の生成に失敗しました。');return;}
-  const found=store.found.length;
-  const file=new File([blob],`osuna_gallery_${found}-of-${ENDINGS.length}.png`,{type:'image/png'});
-  const url=location.protocol==='https:'||location.protocol==='http:'?`${location.origin}${location.pathname}`:'';
-  const text=`『押すなって言っただろ！』のエンディングを${found}/${ENDINGS.length}種類発見！
-ネタバレなしで図鑑の完成状況を共有します。
-#ASOBEAT #押すなって言っただろ`;
-  try{
-    if(navigator.canShare&&navigator.canShare({files:[file]})&&navigator.share){
-      await navigator.share({title:'押すなって言っただろ！ 図鑑進捗',text,files:[file],url:url||undefined});
-      return;
-    }
-  }catch{}
-  triggerBlobDownload(blob,file.name);
-  const target=`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}${url?'&url='+encodeURIComponent(url):''}`;
-  const opened=window.open(target,'_blank','noopener,noreferrer');
-  if(!opened&&navigator.clipboard)navigator.clipboard.writeText(text+(url?'\n'+url:'')).catch(()=>{});
 }
 function resetGallery(){
   if(!confirm('発見したエンディングをすべて削除しますか？'))return;
@@ -656,7 +542,6 @@ $('replayBtn').addEventListener('click',beginIntro);
 $('resultGallery').addEventListener('click',openGallery);
 $('galleryBack').addEventListener('click',backFromGallery);
 $('galleryReplay').addEventListener('click',beginIntro);
-$('galleryShare').addEventListener('click',()=>{shareGalleryProgress().catch(()=>alert('共有画像の作成に失敗しました。'))});
 $('galleryReset').addEventListener('click',resetGallery);
 $('endHome').addEventListener('click',returnTitle);
 $('shareBtn').addEventListener('click',shareResult);
