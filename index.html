@@ -52,6 +52,7 @@
 @media(max-height:690px){.viewport>.screen .button-stage{top:55%}.viewport>.screen .chat-area{height:118px}.viewport>.screen .red-button{width:clamp(154px,46vw,193px);height:clamp(154px,46vw,193px)}}
 @media(max-height:580px){.viewport>.screen .button-stage{top:52%}.viewport>.screen .chat-area{top:63px;height:102px}.viewport>.screen .red-button{width:152px;height:152px}.viewport>.screen .action-btn{min-height:48px}}
 </style>
+<style id="asobeat-howto-style">.asobeat-howto{box-sizing:border-box;width:100%;flex-shrink:0;margin:12px 0;padding:10px 12px;border:1px solid #69788b;border-radius:12px;background:#142236ed;color:#fff5da;text-align:left;font-size:12px;line-height:1.6}.asobeat-howto strong{display:block;font-size:12px;margin:0 0 4px}.asobeat-howto p{margin:3px 0;font-size:inherit;line-height:inherit;color:inherit}#screenTitle .title-content{overflow-y:auto;justify-content:flex-start;gap:18px}#screenTitle .game-title,#screenTitle .start-btn{flex-shrink:0}#screenTitle .asobeat-howto{max-width:340px;margin-top:auto}#screenTitle .start-btn{margin-bottom:12px}</style>
 </head>
 <body>
 <div id="app"><div class="viewport" id="viewport">
@@ -61,7 +62,7 @@
     <div class="office-art" id="titleOfficeArt" aria-hidden="true"></div><div class="title-shade"></div>
     <div class="title-content">
       <h1 class="game-title"><span>押すなって</span><em>言っただろ！</em></h1>
-      <button type="button" id="startBtn" class="start-btn"><span>スタート</span></button>
+      <aside class="asobeat-howto" aria-label="操作方法"><strong>操作方法</strong><p>会話はタップ／クリックで進めます。</p><p>赤いボタンをタップ・連打・長押し。「書類を片付ける」「帰る」や、何もせず待つのも選択肢です。</p></aside><button type="button" id="startBtn" class="start-btn"><span>スタート</span></button>
     </div>
   </section>
   <section id="screenGame" class="screen phase-intro" aria-label="ゲーム画面" hidden>
